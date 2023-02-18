@@ -11,6 +11,7 @@ public class Boid : Kinematic
     private Arrive cohesion;
     private Separation seperation;
     private Align alignment;
+    private ObstacleAvoidance avoid;
 
 
 
@@ -26,15 +27,25 @@ public class Boid : Kinematic
         seperation = new Separation();
         seperation.character = this;
         seperation.targets = otherBoids;
+
+        avoid = new ObstacleAvoidance();
+        avoid.character = this;
+        avoid.target = flockMass;
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
         steeringUpdate = new SteeringOutput();
 
-        steeringUpdate.linear = cohesion.getSteering().linear;
-        steeringUpdate.linear += seperation.getSteering().linear;
+
+        steeringUpdate.linear = avoid.getSteering().linear;
+
+        if (avoid.hitWall == false)
+        {
+            steeringUpdate.linear = cohesion.getSteering().linear;
+            steeringUpdate.linear += seperation.getSteering().linear;
+        }
 
         base.Update();
     }
