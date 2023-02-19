@@ -13,6 +13,8 @@ public class Boid : Kinematic
     private Align alignment;
     private ObstacleAvoidance avoid;
 
+    public FlockController flockController;
+
 
 
     // Start is called before the first frame update
@@ -43,8 +45,8 @@ public class Boid : Kinematic
 
         if (avoid.hitWall == false)
         {
-            steeringUpdate.linear = cohesion.getSteering().linear;
-            steeringUpdate.linear += seperation.getSteering().linear;
+            steeringUpdate.linear = cohesion.getSteering().linear * flockController.cohesionSTR;
+            steeringUpdate.linear += seperation.getSteering().linear * flockController.seperationSTR;
         }
 
         base.Update();

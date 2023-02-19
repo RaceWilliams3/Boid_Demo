@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObstacleAvoidance : Seek
 {
-    public float avoidDistance = 2f;
+    public float avoidDistance = 3f;
 
     public float lookahead = 3f;
 
